@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<body>
+<table border="3">
+    <tr><td>
+<p id="demo"></p>
+</tr></td>
+</table>
+<script>
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        myFunction(this);
+    }
+};
+xhttp.open("GET", "CFG.xml", true);
+xhttp.send();
+
+function myFunction(xml) {
+    var x, y, z, con, i, xmlDoc, txt,id;
+    var countE;
+    xmlDoc = xml.responseXML;
+    txt = "";
+    contE = 0;
+
+    x = xmlDoc.getElementsByTagName('Varname');
+    y = xmlDoc.getElementsByTagName('Type');
+    z = xmlDoc.getElementsByTagName('Dataset');
+    con = xmlDoc.getElementsByTagName('Condition');
+   input=xmlDoc.getElementsByTagName('Input');
+   Ac=xmlDoc.getElementsByTagName('Action');
+   
+  /* for (var k = 0; k <10; k++) {
+    txt +="id="+con[j].getAttribute('id')+"<br>";
+}*/
+
+    for (i = 0; i < x.length; i++) {
+        //txt += x[i].getAttribute('min') + "<br>"; 
+        txt = txt + "Varname=" +  x[i].childNodes[0].nodeValue + " ";
+        txt = txt + "Type=" +  y[i].childNodes[0].nodeValue + " ";
+        txt = txt + "Dataset=" +  z[i].childNodes[0].nodeValue + "<br>";
+       // countE = parseInt(z[i].childNodes[0].nodeValue);
+        //txt = txt + "countE=" + countE;
+       
+  
+            //if(y[i].childNodes[0].nodeValue=="Range"){
+           // }
+        var j=0;
+       
+           while(j<z[i].childNodes[0].nodeValue){
+            contE = contE+j;
+           if(input[i]){
+           if( x[i].childNodes[0].nodeValue=="Order Price"){
+            txt += "id="+con[j].getAttribute('id')+" min=" + con[j].getAttribute('min') + " max=" + con[j].getAttribute('max')  + "<br>";
+            //txt += "j="+j+" min=" + con[j].getAttribute('min') + "<br>";    
+           }else{
+            txt +="id="+con[contE].getAttribute('id')+" value="+ con[contE].getAttribute('value') + "<br>";
+           }
+        }else{
+            txt +="id="+Ac[j].getAttribute('id')+" value="+ Ac[j].getAttribute('value') + "<br>";
+
+        }
+        j++;
+        
+    }    
+; 
+    
+        
+    
+        
+        //for
+       // if(y[i].childNodes[0].nodeValue=="Range"){
+           //txt +="min=" + con[i].getAttribute('min') + " max=" + con[i].getAttribute('max') + " value="+ con[i].getAttribute('value') + "<br>";
+        //}else if(y[i].childNodes[0].nodeValue=="Ordinal"){
+            //txt +="value="+con[i].getAttribute('value') + "<br>";
+       // }    else{
+        //   txt += " Error Type <br>";
+
+        //}
+       
+       }
+       
+     document.getElementById("demo").innerHTML = txt; 
+     
+}</script>
+
+</body>
+</html>
+ 

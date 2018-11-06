@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <UC>
+      <Input>
+        <Varname>Order Price</Varname>
+        <Type>Range</Type>
+        <Dataset>3</Dataset>
+       <id>1 <Condition id="1" min="1000" max ="2499" type="xs:integer" /></id>
+        <id>2 <Condition id="2" min="2500" max ="4999"  type="xs:integer"/></id>
+         <id>3<Condition id="3" min="5000" max ="999999" type="xs:integer"/></id>
+      </Input>
+      <Input>
+        <Varname>CustType</Varname>
+        <Type>Ordinal</Type>
+        <Dataset>2</Dataset>
+         <id>4<Condition value="Silver" /></id>
+         <id>5<Condition id="5" value="Gold" /></id>
+    </Input>
+    <Output>
+        <Varname>Total Discount</Varname> 
+        <Type>Ordinal</Type>
+        <Dataset>6</Dataset>
+         <id>6<Action id="6" value="5"   type="xs:integer"/></id>
+         <id>7<Action id="7" value="10"  type="xs:integer"/></id>
+         <id>8<Action id="8" value="15"  type="xs:integer"/></id>
+         <id>9<Action id="9" value="20"  type="xs:integer"/></id>
+         <id>10<Action id="10" value="25"  type="xs:integer"/></id>
+         <id>11<Action id="11" value="30"  type="xs:integer"/></id>
+         
+    </Output>   
+ 
+  </UC>
+
+
+   

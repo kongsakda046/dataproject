@@ -1,0 +1,100 @@
+{
+    "name": "System",
+  "children": [
+        {
+           
+            "name": "Order Price",
+            "ID":"1",
+            "isparent": false,
+            "children":[{
+                "name": "Range",
+               "isparent":true ,
+               "children":[{
+                "name": "3",
+                "isparent":true},
+                { 
+                    "name": "1000 - 2499", 
+                    "isparent":true
+                },
+                { 
+                    "name": "2500 - 4999", 
+                    "isparent":true
+                },
+                { 
+                    "name": "5000-999999", 
+                    "isparent":true
+
+               }]
+            }
+            ]
+            
+               
+        },
+        {
+            "name": "CustType",
+            "isparent": false,
+            "children":[{
+                "name": "Ordinal",
+               "isparent":true ,
+               "children":[{
+                "name": "2",
+                "isparent":true},
+                { 
+                    "name": "Silver", 
+                    "isparent":true
+                },
+                { 
+                    "name": "Gold", 
+                    "isparent":true
+                }
+            ]
+            }
+            
+               ]
+
+        },
+        {
+            "name": "Total Discount",
+            "isparent": false,
+            "children":[{
+                "name": "Ordinal",
+               "isparent":true ,
+               "children":[{
+                "name": "6",
+                "isparent":true},
+                { 
+                    "name": "5", 
+                    "isparent":true
+                },
+                { 
+                    "name": "10", 
+                    "isparent":true
+                },
+                { 
+                    "name": "15", 
+                    "isparent":true
+                },
+                { 
+                    "name": "20", 
+                    "isparent":true
+                },
+                { 
+                    "name": "25", 
+                    "isparent":true
+
+               },
+                { 
+                    "name": "30", 
+                    "isparent":true
+
+               }]
+            }
+            
+               ]
+               
+           
+            
+        }
+        
+    ]
+}

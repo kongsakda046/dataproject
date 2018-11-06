@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>        
+<body>
+        <input type="file" id="selectFiles" value="Import" /><br />
+        <button id="import">Import</button>
+        <textarea id="result"></textarea>
+    <!--<button type="button" onclick="loadXMLDoc()">Get my CD collection</button>-->
+        <br><br>
+        <table id="demo"></table>
+        
+<div>   
+
+<a id="reader"></a>
+<p id="demo"></p>
+</div>
+<script>
+document.getElementById('import').onclick = function() {
+    var files = document.getElementById('selectFiles').files;
+  console.log(files);
+  if (files.length <= 0) {
+    return false;
+  }
+
+  var fr = new FileReader();
+
+  fr.onload = function(e) { 
+  console.log(e);
+    var result = JSON.parse(Brown);
+    var formatted = JSON.stringify(result, null, 2);
+        document.getElementById('result').value = formatted;
+  }
+
+  fr.readAsText(files.item(0));
+};
+function loadXMLDoc() {
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      myFunction(this);
+    }
+  };
+
+  xmlhttp.open("GET",x, true);
+  xmlhttp.send();
+};
+
+
+function myFunction(xml) {
+  var i;
+  var xmlDoc = xml.responseXML;
+  var table="<tr><th>Varname</th><th>Type</th></tr>";
+  var x = xmlDoc.getElementsByTagName("Input");
+  var x1,x2,x3;
+  x1 = xmlDoc.getElementsByTagName('Varname');
+x2 = xmlDoc.getElementsByTagName('Type');
+x3 = xmlDoc.getElementsByTagName('Dataset');
+x4 = xmlDoc.getElementsByTagName('Condition');
+  for (i = 0; i <x.length; i++) { 
+    table += "<tr><td>" +
+    
+    x[i].getElementsByTagName("Varname")[0].childNodes[0].nodeValue +typeof x1+
+    "</td><td>" +
+        x[i].getElementsByTagName("Varname")[0].childNodes[0].nodeValue +
+    "</td><td>"+
+    x[i].getElementsByTagName("Type")[0].childNodes[0].nodeValue +
+    "</td></tr>";
+  }
+  document.getElementById("demo").innerHTML = table;
+}
+
+
+ 
+
+/*
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        myFunction(this);
+    }
+};
+xhttp.open("GET", "CFG.xml", true);
+xhttp.send();
+
+//ทดสอบ ไป html
+function myFunction(xml) {
+    var x, y, z, con, i, xmlDoc, txt,id;
+    var countE;
+    xmlDoc = xml.responseXML;
+    txt = "";
+    contE = 0;
+
+    x = xmlDoc.getElementsByTagName('Varname');
+    y = xmlDoc.getElementsByTagName('Type');
+    z = xmlDoc.getElementsByTagName('Dataset');
+    con = xmlDoc.getElementsByTagName('Condition');
+   input=xmlDoc.getElementsByTagName('Input');
+   Ac=xmlDoc.getElementsByTagName('Action');
+  /* for (var k = 0; k <10; k++) {
+    txt +="id="+con[j].getAttribute('id')+"<br>";
+}*/
+
+   /* for (i = 0; i < x.length; i++) {
+        //txt += x[i].getAttribute('min') + "<br>"; 
+        txt = txt + "Varname=" +  x[i].childNodes[0].nodeValue + " ";
+        txt = txt + "Type=" +  y[i].childNodes[0].nodeValue + " ";
+        txt = txt + "Dataset=" +  z[i].childNodes[0].nodeValue + "<br>";
+
+    }
+       
+     document.getElementById("demo").innerHTML = txt; 
+}*/
+</script>
+</body>
+</html>

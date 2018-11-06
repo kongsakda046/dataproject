@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+ 
+
+<!DOCTYPE html>
+<html>
+<style>
+table,th,td {
+  border : 1px solid black;
+  border-collapse: collapse;
+}
+th,td {
+  padding: 5px;
+}
+</style>
+<body>
+
+<button type="button" onclick="loadXMLDoc()">Get my CD collection</button>
+<br><br>
+<table id="demo"></table>
+
+<script>
+   var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        myFunction(this);
+    }
+};
+xhttp.open("GET", "DecisionTree.xml", true);
+xhttp.send();
+
+
+function loadXMLDoc() {
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      myFunction(this);
+    }
+  };
+  xmlhttp.open("GET","DecisionTree.xml", true);
+  xmlhttp.send();
+  xmlhttp.open("GET","CFG.xml", true);
+  xmlhttp.send();
+}
+function myFunction(xml) {
+  var i;
+  var xmlDoc = xml.responseXML;
+  var table="<tr><th>NUMBER</th><th>Type</th><th>Value</th></tr>";
+  var testw = xmlDoc.getElementsByTagName("DecisionS");
+  var x = xmlDoc.getElementsByTagName("Input");
+  var y = xmlDoc.getElementsByTagName("Output");
+  var x1,x2,x3;
+  x1 = xmlDoc.getElementsByTagName('Varname');
+x2 = xmlDoc.getElementsByTagName('Type');
+x3 = xmlDoc.getElementsByTagName('Dataset');
+x4 = xmlDoc.getElementsByTagName('Condition');
+y5=xmlDoc.getElementsByTagName('Action');
+x5=xmlDoc.getElementsByTagName('id');
+
+work=xmlDoc.getElementsByTagName('Decision');
+
+var tru= "valid";
+var flae="invalid";
+
+
+var sumid=x4.length+x5.length;
+
+var conteE=0;
+var conte=0;
+var max=x4[0].getAttribute('max');
+    var min=x4[0].getAttribute('min');
+    var prete=x4[3].getAttribute('value');
+    var preto=x4[4].getAttribute('value');
+    
+    console.log(preto);
+    console.log(prete);
+console.log(min);
+console.log(max);
+
+
+/*var controll="";
+if(x5.getAttribute("id")){
+  
+}*/
+//var c=x4[Math.floor(Math.random() * x4.length)].getAttribute('min')+" "+x4[Math.floor(Math.random() * x4.length)].getAttribute('max');
+
+//console.log(textew);
+var k=0;
+var contes=0;
+var teen="";
+for (var j=0;j<x1.length;j++){
+    var i = 0;
+
+
+//while(i <x3.length){
+  conte=j+2;
+  
+for (var i=0;i<x3.length;i++){
+  contes=i+k;
+  if(x4[0].getAttribute('refid')==x4[0].getAttribute("id")){
+teen=tru;
+table += "<tr><td>" +x4[i].getAttribute('min')+" "+x4[i].getAttribute('max')+"</td><td>"+x4[conte].getAttribute('value')+"</td><td>"+y5[contes].getAttribute('value')+"</td><td>"+teen;
+      console.log(y5[j].getAttribute('value'));
+    }else{
+      teen=false;
+      table += "<tr><td>" +x4[i].getAttribute('min')+" "+x4[i].getAttribute('max')+"</td><td>"+x4[conte].getAttribute('value')+"</td><td>"+y5[contes].getAttribute('value')+"</td><td>"+teen;
+      console.log(y5[j].getAttribute('value'));
+    }
+  
+   /* var textew = x4[Math.floor(Math.random() * x4.length+2)].getAttribute('value');
+    console.log(textew);    
+ */
+//if(x4[i].getAttribute('min')>1000&&x4[i].getAttribute('max')<10000){
+   /* table += "<tr><td>" +x4[i].getAttribute('min')+" "+x4[i].getAttribute('max')+"</td><td>"+x4[conte].getAttribute('value')+"</td><td>"+y5[contes].getAttribute('value')+"</td><td>"+tru;
+      console.log(y5[j].getAttribute('value'));*/
+//}else{
+ //   table+="<tr><td>"+x4[i].getAttribute('min')+" "+x4[i].getAttribute('max')+"</td><td>"+textew+"</td><td>"+"t"+"</td><td>"+flae;
+//} c
+//i++;
+
+  }
+  k++;
+}
+
+  document.getElementById("demo").innerHTML = table;
+
+
+}
+</script>
+
+</body>
+</html>
+    
+</body>
+</html>

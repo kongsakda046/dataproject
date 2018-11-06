@@ -1,0 +1,104 @@
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+<script>
+data = [
+{name: "Mark-Paul Gosselaar", photo_url: "OP.png"},
+{name: "Delta Burke", photo_url: "OP.png"},
+{name: "Alf", photo_url: "OP.png"},
+{name: "Jaleel White", photo_url: "OP.png"},
+{name: "Ralph Macchio", photo_url: "OP.png"},
+{name: "Candace Cameron", photo_url: "OP.png"}
+];
+//MY CODE
+
+
+
+$(document).ready(function() {
+var employee = data;
+console.log(employee);
+reverseArr(employee);
+var directory = $("#directory");
+//Sort json data
+function reverseArr(input) {
+    console.log(employee);
+    for (var i = 0;i<input.length ; i++) {
+        var photoPlacement = employee[i].photo_url;
+        console.log(photoPlacement);
+        //CHECKS TO SEE IF A PHOTO_URL OBJECT HAS SOMETHING IN IT, IF IT DOESN'T THEN INJECTS THE DEFAULT IMAGE
+        if (photoPlacement.length <= 0) {
+            photoPlacement = 'default.png'
+        } else {
+            photoPlacement = employee[i].photo_url;
+        }
+        var employeePost = "<div class='employee'><div id='photo'><img src=" + photoPlacement + "></div><div id='closeButton' class='close'><img src='img/close.png'></div><div class='empName'>" + employee[i].name + "</div></div>";
+        $("#directory").append(employeePost);
+    }
+}
+
+
+//SHOW THE "X" (CLOSE) BUTTON
+$('.employee').hover(
+        function() {
+            $(this).children("#closeButton").removeClass("x")
+            $(this).children("#closeButton").addClass("showClose")
+            //IF THE "X" (CLOSE) BUTTON IS CLICKED, DELETE PARENT DIV
+            $(this).children("#closeButton").click(function(event) {
+                event.preventDefault();
+                $(this).parent(".employee").remove();
+            })
+        },
+        function() {
+            $(this).children("#closeButton").removeClass("showClose")
+            $(this).children("#closeButton").addClass("x")
+        }
+);
+//IF FORM BUTTON IS CLICKED, SUBMIT NEW DATA TO JSON OBJECT
+
+    //listen to form submit
+    $("form").on("submit", function(event) {
+        event.preventDefault();
+        //serialize form to object
+        var formData = {name:$("#name").val(),photo_url:$("#photo_url").val()}
+        console.log(formData);
+        data.push(formData);
+        console.log(data);
+        reverseArr(data);
+    });
+});
+
+
+
+
+
+</script>
+
+<html>
+    <head>
+        <link href="css/application.css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="main-content">
+            <!-- The page width is 817px -->
+            <!-- Example of using the form CSS to help you out. -->
+            <form>
+                <div>
+                    <label>Full Name</label>
+                    <input name="name" type="text" required  id="name"/>
+                </div>
+                <div>
+                    <label>Photo URL</label>
+                    <input name="photo_url" id="photo_url" />
+                </div>
+                <button type="submit">Create</button>
+            </form>
+            <hr />
+            <!-- Employee list goes here. There is initial data for you in application.js -->
+            <div id="directory">
+            </div>
+        </div>
+        <script src="js/vendor/jquery.min.js" type="text/javascript"></script>
+        <script src="js/vendor/underscore.js" type="text/javascript"></script>
+        <script src="js/application.js" type="text/javascript"></script>
+        <script src="js/main.js" type="text/javascript"></script>
+    </body>
+</html>

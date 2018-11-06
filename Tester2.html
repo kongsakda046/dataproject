@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>  
+    <title>Document</title>
+
+    <style>
+            
+            .node circle {
+              fill: #fff;
+              stroke: steelblue;
+              stroke-width: 3px;
+            }
+        
+            .node text { font: 12px sans-serif; }
+        
+            .link {
+              fill: none;
+              stroke: #ccc;
+              stroke-width: 2px;
+            }
+            
+            </style>
+       <!--  "name": "Top Level",
+         "parent": "null",
+         "value": 10,
+         "type": "black",
+         "level": "red",
+         "icon": "OP.png",
+          "children": [-->
+
+</head>
+<body>
+    <div id="main-content">
+        <!-- The page width is 817px -->
+        <!-- Example of using the form CSS to help you out. -->
+        <form>
+         
+            <div>
+                <label> Name</label>
+                <input name="name" type="text" required  id="name"/>
+            </div>
+            <div>
+                <label> parent</label>
+                <input name="parent" type="text" required  id="parent"/>
+            </div>
+            <div>
+            <label> level</label>
+            <input name="level" type="text" required  id="level"/>
+        </div>
+        <div>
+        <label> value</label>
+        <input name="value" type="text" required  id="value"/>
+    </div>
+            <div>
+                <label>Photo URL</label>
+                <input name="icon" id="icon" />
+            </div>
+            <div>
+                    <button id="children" value="">children</button>
+           
+            </div>
+      
+            <button type="submit">Create</button>
+
+
+            
+        </form>
+        <hr />
+        <!-- Employee list goes here. There is initial data for you in application.js -->
+        <div id="directory">
+        </div>
+    </div>
+
+
+
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+
+
+
+        <button onclick="document.getElementById('myImg').src='Cir.jpeg'">Turn on the light</button>
+        <img id="myImg" src="Cir.jpeg" style="width:100px">
+        <button onclick="document.getElementById('myImg').src='OP.png'">Turn off the light</button>
+        <script>
+
+
+                var treeData = [
+          {
+            "name": "Top Level",
+            "parent": "null",
+            "value": 10,
+            "type": "black",
+            "level": "red",
+            "icon": "OP.png",
+            "children": [
+              {
+                "name": "Level 2: A",
+                "parent": "Top ",
+                "value": 5,
+                "type": "grey",
+                "level": "red",
+               "icon": "OP.png",
+                "children": [
+                  {
+                    "name": "Son of A",
+                    "parent": "Level 2: A",
+                    "value": 5,
+                    "type": "steelblue",
+                    "icon": "OP.png",
+                    "level": "orange"
+                  },
+          
+                  
+                ]
+              },
+              {
+                "name": "Level 2: B",
+                "parent": "Top Level",
+                "value": 10,
+                "type": "grey",
+                "icon": "OP.png",
+                "level": "green"
+              }
+            ]
+          }
+        ];
+        $("form").on("submit", function(event) {
+        event.preventDefault();
+        //serialize form to object
+        var formData = {
+          name:$("#name").val(),
+        parent:$("#parent").val(),
+       value:$("#value").val(),
+        level:$("#level").val(),
+        icon:$("#icon").val(),
+ 
+       children:$("#children").serializeArray()
+        }
+     
+        treeData.push(formData);
+        console.log(treeData);
+    
+    });
+        
+        var margin = {top: 20, right: 220, bottom: 20, left: 120},
+        height   = 960 - margin.right - margin.left,
+        width = 500 - margin.top - margin.bottom;
+        
+        var i = 0;
+        
+        var tree = d3.layout.tree()
+        .size([height, width]);
+        
+        var diagonal = d3.svg.diagonal()
+        .projection(function(d) { return [d.x, d.y]; });
+        
+        var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.right + margin.left)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", 
+              "translate(" + margin.left + "," + margin.top + ")");
+   
+     
+              root = treeData[0]; 
+
+     console.log(root);
+  
+    
+        update(root);
+
+        function update(source) {
+        // Compute the new tree layout.
+        var nodes = tree.nodes(root).reverse(),
+          links = tree.links(nodes);
+        // Normalize for fixed-depth.
+        nodes.forEach(function(d) { d.y = d.depth * 180; });
+        // Declare the nodes…
+        var node = svg.selectAll("g.node")
+          .data(nodes, function(d) { return d.id || (d.id = ++i); });
+        // Enter the nodes.
+        var nodeEnter = node.enter().append("g")
+          .attr("class", "node")
+          .attr("transform", function(d) { 
+              return "translate(" + d.x + "," + d.y + ")"; });
+  
+        nodeEnter.append("image")
+          .attr("xlink:href", function(d) { return d.icon; })
+          .attr("x", "-12px")
+          .attr("y", "-12px")
+          .attr("width", "50px")
+          .attr("height", "50px");
+        nodeEnter.append("text")
+        
+          .attr("x", function(d) { 
+              return d.children || d._children ? 
+              (15) * 1 : + 15 })
+          .attr("dy", ".35em")
+          .attr("text-anchor", function(d) { 
+              return d.children || d._children ? "end" : "start"; })
+          .text(function(d) { return d.name; })
+          .style("fill-opacity", 1);
+        
+        // Declare the links…
+        var link = svg.selectAll("path.link")
+          .data(links, function(d) { return d.target.id; });
+        
+        // Enter the links.
+        link.enter().insert("path", "g")
+          .attr("class", "link")
+          .style("stroke", function(d) { return d.target.level; })
+          .attr("d", diagonal);
+        
+        
+        
+   
+        }
+        
+        
+        
+
+
+        
+            </script>
+ 
+</body>
+
+</html>
